@@ -40,7 +40,7 @@ public class RiotApiController {
     @Value("${riot.api.key}")
     private String riotApiKey;
     
-    @RequestMapping(value = "/calc", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/calc", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes={"application/json"})
     @ResponseBody
    public String querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
         final String url = riotApiEndpoint;                   
