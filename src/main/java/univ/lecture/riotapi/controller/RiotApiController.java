@@ -52,7 +52,7 @@ public class RiotApiController {
 	       long now = dt.getTime();
 	       double result = cal.calculate(equation);
 	        
-	       Summoner summoner = new Summoner(teamId, now, result,null);
+	       Summoner summoner = new Summoner(teamId, now, result);
 	
 	       Gson gson = new Gson();
 	       
