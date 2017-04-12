@@ -55,9 +55,9 @@ public class RiotApiController {
         
         
 //        String request = gson.toJson(summoner);
-        String string = restTemplate.postForObject(url, summoner, String.class);
+        String mineString = restTemplate.postForObject(url, summoner, String.class);
 //       Summoner summoner2 = new Summoner(teamId,now,result);
        
-      return string;
+      return mineString;
     }
 }
