@@ -55,7 +55,7 @@ public class RiotApiController {
         String request = "{"
         + "\"teamId\":\"7\","
         + "\"now\":"+System.currentTimeMillis()
-        + "\"cal\":"+cal.calculate(equation)
+        + "\"result\":"+cal.calculate(equation)
         + "}";
 
        
@@ -67,8 +67,8 @@ public class RiotApiController {
        int teamId = (Integer)summonerDetail.get("teamId");
        int now = (Integer)summonerDetail.get("now");
        double result = (double)summonerDetail.get("result");
-//       summonerDetail=(Map<String,Object>)parsedMap.values().toArray()[0];
-//       parsedMap = new JacksonJsonParser().parseMap(request);
+       summonerDetail=(Map<String,Object>)parsedMap.values().toArray()[0];
+       parsedMap = new JacksonJsonParser().parseMap(request);
        
        
        
