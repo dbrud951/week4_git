@@ -58,6 +58,12 @@ public class RiotApiController {
 	       request += gson.toJson(now);
 	       request += gson.toJson(result);
 	       String msg = restTemplate.postForObject(url, request, String.class);
+	       Map<String, Object> parsedMap = new JacksonJsonParser().parseMap(msg);
+	       parsedMap.forEach((key, value) -> log.info(String.format("key [%s] type [%s] value [%s]", key, value.getClass(), value)));
+	       Map<String, Object> summonerDetail = (Map<String, Object>) parsedMap.values().toArray()[0];
+	        teamId = (Integer)summonerDetail.get("teamId");
+	        now = (Long)summonerDetail.get("now");
+	        result = (Double)summonerDetail.get("result");
 	       Summoner summoner = new Summoner(teamId, now, result,msg);
 
 	       return summoner;   
