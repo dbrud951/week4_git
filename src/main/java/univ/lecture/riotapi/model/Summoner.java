@@ -16,7 +16,7 @@ public class Summoner {
 	private int teamId;
 	private long now;
 	private double result;
-	
+	private String msg;
 	
 	
 }
