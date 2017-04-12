@@ -41,52 +41,22 @@ public class RiotApiController {
     private String riotApiKey;
     
     @RequestMapping(value = "/calc/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody String querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
+    public @ResponseBody Summoner querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
         final String url = riotApiEndpoint;
 
-        Calculator cal = new Calculator();
-//
-//        Data dt = new Data();
-//        
-//        dt.setResult(equation);
-//        
-//        int teamId = dt.getTeamId();
-//        long now = dt.getNow();
-//        double result = dt.getResult();
-//        
-//       
-//        JSONObject j = new JSONObject();
-//        j.put("teamId", teamId);
-//        j.put("now", now);
-//        j.put("result", result);
-//        
-////        Json js = new Json(url);
-//        
-////        Data resultData = restTemplate.postForObject(url, dt, String.class);
-//        
-//        String sendMsg = j.toString();
-//        @SuppressWarnings("deprecation")
-//		JSONParser parser = new JSONParser();
-//       // String response = restTemplate.postForObject(url, dt, String.class);
-//        JSONObject jsonObj = (JSONObject)parser.parse(sendMsg);
-//        teamId = (int) jsonObj.get("teamId");
-//        now = (long) jsonObj.get("now");
-//        result = (double) jsonObj.get("result");
-//        
-//        String summoner = new Summoner(teamId, now, result);
-
-       Date dt = new Date();
-        
-       int teamId = 7;
-       long now = dt.getTime();
-       double result = cal.calculate(equation);
-        
-       Summoner summoner = new Summoner(teamId, now, result);
-
-       Gson gson = new Gson();
-       
-       String request = gson.toJson(summoner);
-       String string = restTemplate.postForObject(url, request, String.class);
-        return string;
+	       Calculator cal = new Calculator();
+	       Date dt = new Date();
+	        
+	       int teamId = 7;
+	       long now = dt.getTime();
+	       double result = cal.calculate(equation);
+	        
+	       Summoner summoner = new Summoner(teamId, now, result);
+	
+	       Gson gson = new Gson();
+	       
+	       String request = gson.toJson(summoner);
+	       String string = restTemplate.postForObject(url, request, String.class);
+        return summoner;
     }
 }
