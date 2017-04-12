@@ -41,9 +41,9 @@ public class RiotApiController {
     private String riotApiKey;
     
     @RequestMapping(value = "/calc/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public @ResponseBody String querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
-    public @ResponseBody Summoner querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
-    	//final String url = riotApiEndpoint;
+    public @ResponseBody String querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
+ //   public @ResponseBody Summoner querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
+    	   final String url = riotApiEndpoint;
 
 	       Calculator cal = new Calculator();
 	       Date dt = new Date();
@@ -52,31 +52,31 @@ public class RiotApiController {
 	       long now = dt.getTime();
 	       double result = cal.calculate(equation);
 	        
-//	       Gson gson = new Gson();
-//	       
-//	       String request = gson.toJson(teamId);
-//	       request += gson.toJson(now);
-//	       request += gson.toJson(result);
-//	       String msg = restTemplate.postForObject(url, request, String.class);
-//	       Summoner summoner = new Summoner(teamId, now, result,msg);
+	       Gson gson = new Gson();
+	       
+	       String request = gson.toJson(teamId);
+	       request += gson.toJson(now);
+	       request += gson.toJson(result);
+	       String msg = restTemplate.postForObject(url, request, String.class);
+	       Summoner summoner = new Summoner(teamId, now, result,msg);
+
+	       return msg;   
+//	       final String url = riotApiEndpoint + "teamId:" +
+//	                teamId +
+//	                "now:" +
+//	                now+"result:"+result;
 //
-//	       return summoner;   
-	       final String url = riotApiEndpoint + "teamId" +
-	                teamId +
-	                "now" +
-	                now+"result"+result;
-
-	        String response = restTemplate.getForObject(url, String.class);
-	        Map<String, Object> parsedMap = new JacksonJsonParser().parseMap(response);
-
-	        parsedMap.forEach((key, value) -> log.info(String.format("key [%s] type [%s] value [%s]", key, value.getClass(), value)));
-
-	        Map<String, Object> summonerDetail = (Map<String, Object>) parsedMap.values().toArray()[0];
-	        teamId = (Integer)summonerDetail.get("teamId");
-	        now = (Long)summonerDetail.get("now");
-	        result = (Double)summonerDetail.get("result");
-	        Summoner summoner = new Summoner(teamId, now,result,response);
-
-	        return summoner;
+//	        String response = restTemplate.getForObject(url, String.class);
+//	        Map<String, Object> parsedMap = new JacksonJsonParser().parseMap(response);
+//
+//	        parsedMap.forEach((key, value) -> log.info(String.format("key [%s] type [%s] value [%s]", key, value.getClass(), value)));
+//
+//	        Map<String, Object> summonerDetail = (Map<String, Object>) parsedMap.values().toArray()[0];
+//	        teamId = (Integer)summonerDetail.get("teamId");
+//	        now = (Long)summonerDetail.get("now");
+//	        result = (Double)summonerDetail.get("result");
+//	        Summoner summoner = new Summoner(teamId, now,result,response);
+//
+//	        return summoner;
     }
 }
