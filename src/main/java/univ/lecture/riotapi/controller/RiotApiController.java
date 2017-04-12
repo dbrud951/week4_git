@@ -36,44 +36,45 @@ public class RiotApiController {
 
     @Value("${riot.api.key}")
     private String riotApiKey;
-    
-// @RequestMapping(value = "/summoner/{name}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public Summoner querySummoner(@PathVariable("name") String summonerName) throws UnsupportedEncodingException {
-//    	/*final String url = riotApiEndpoint + "/summoner/by-name/" +
-//                summonerName +
-//                "?api_key=" +
-//                riotApiKey;
-//    	
-//       String response = restTemplate.getForObject(url, String.class);//(url, 반환될 데이터 타입), 메서드는 GET을 수행하고 HTTP 응답을 원하는 객체 타입으로 변환해서 반환한다.
-//    	//int response = restTemplate.getForObject(url, Integer.class);
-//    	response = Integer.toString(C.calculate(summonerName));
-//        Map<String, Object> parsedMap = new JacksonJsonParser().parseMap(response);
-//
-//        parsedMap.forEach((key, value) -> log.info(String.format("key [%s] type [%s] value [%s]", key, value.getClass(), value)));
-//
-//        Map<String, Object> summonerDetail = (Map<String, Object>) parsedMap.values().toArray()[0];
-//        String queriedName = (String)summonerDetail.get("name");
-//        int queriedLevel = (Integer)summonerDetail.get("summonerLevel");*/
-//    	final String url = riotApiEndpoint;
-//     	Calculator C = new Calculator();
-//    	Summoner summoner = new Summoner(queriedName, queriedLevel);
-//
-//        return summoner;
-//    }
+
     @RequestMapping(value = "/calc/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody Summoner querySummoner(@RequestBody String ecuation) throws UnsupportedEncodingException {
         final String url = riotApiEndpoint;
 
+//        Calculator cal = new Calculator();
+//
+//        Date dt = new Date();
+//        
+//        int teamId = 7;
+//        long now = dt.getTime();
+//        double result = cal.calculate(ecuation);
+//        
+//        Summoner summoner = new Summoner(teamId, now, result);
         Calculator cal = new Calculator();
-
-        Date dt = new Date();
         
-        int teamId = 7;
-        long now = dt.getTime();
-        double result = cal.calculate(ecuation);
-        
-        Summoner summoner = new Summoner(teamId, now, result);
+        String request = "{"
+        + "\"teamId\":\"7\","
+        + "\"now\":"+System.currentTimeMillis()
+        + "\"cal\":"+cal.calculate(equation)
+        + "}";
 
+       
+       String response = restTemplate.postForObject(url, request, String.class);
+       Map<String, Object> parsedMap = new JacksonJsonParser().parseMap(response);
+       
+
+       Map<String, Object> summonerDetail = (Map<String, Object>) parsedMap.values().toArray()[0];
+       int teamId = (Integer)summonerDetail.get("teamId");
+       int now = (Integer)summonerDetail.get("now");
+       double result = (double)summonerDetail.get("result");
+//       summonerDetail=(Map<String,Object>)parsedMap.values().toArray()[0];
+//       parsedMap = new JacksonJsonParser().parseMap(request);
+       
+       
+       
+       Summoner summoner = new Summoner(teamId, now, result);
+
+       return summoner;
         return summoner;
     }
 }
