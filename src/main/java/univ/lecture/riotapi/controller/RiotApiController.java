@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 
 import springfox.documentation.spring.web.json.Json;
 import univ.lecture.riotapi.Calculator;
-import univ.lecture.riotapi.model.Model;
+import univ.lecture.riotapi.model.Team7;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -53,12 +53,12 @@ public class RiotApiController {
         long now = dt.getTime(); 
         double result = calc.calculate(equation);
         
-        Model model = new Model(teamId,now,result);                
+        Team7 team7 = new Team7(teamId,now,result);                
 //        Gson gson = new Gson();
         
         
 //        String request = gson.toJson(summoner);
-        String mineString = restTemplate.postForObject(url, model, String.class);
+        String mineString = restTemplate.postForObject(url, team7, String.class);
 //       Summoner summoner2 = new Summoner(teamId,now,result);
        
       return mineString;
