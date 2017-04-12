@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Summoner {
 	/* private String name;
     private int summonerLevel;*/
-	private int teamID;
+	private int teamId;
 	private int now;
 	private double result;
 	

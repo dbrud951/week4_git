@@ -67,39 +67,61 @@ public class RiotApiController {
     }
     
     @RequestMapping(value = "/calc/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody String querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
+    public @ResponseBody Summoner querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
         final String url = riotApiEndpoint;
-
+//
+//        Calculator cal = new Calculator();
+//
+//        Data dt = new Data();
+//        
+//        dt.setResult(equation);
+//        
+//        int teamId = dt.getTeamId();
+//        long now = dt.getNow();
+//        double result = dt.getResult();
+//        
+//       
+//        JSONObject j = new JSONObject();
+//        j.put("teamId", teamId);
+//        j.put("now", now);
+//        j.put("result", result);
+//        
+////        Json js = new Json(url);
+//        
+////        Data resultData = restTemplate.postForObject(url, dt, String.class);
+//        
+//        String sendMsg = j.toString();
+//        @SuppressWarnings("deprecation")
+//		JSONParser parser = new JSONParser();
+//       // String response = restTemplate.postForObject(url, dt, String.class);
+//        JSONObject jsonObj = (JSONObject)parser.parse(sendMsg);
+//        teamId = (int) jsonObj.get("teamId");
+//        now = (long) jsonObj.get("now");
+//        result = (double) jsonObj.get("result");
+//        
+//        String summoner = new Summoner(teamId, now, result);
         Calculator cal = new Calculator();
-
-        Data dt = new Data();
         
-        dt.setResult(equation);
-        
-        int teamId = dt.getTeamId();
-        long now = dt.getNow();
-        double result = dt.getResult();
-        
+        String request = "{"
+        + "\"teamId\":"+7
+        + "\"now\":"+System.currentTimeMillis()
+        + "\"cal\":"+cal.calculate(equation)
+        + "}";
        
-        JSONObject j = new JSONObject();
-        j.put("teamId", teamId);
-        j.put("now", now);
-        j.put("result", result);
-        
-//        Json js = new Json(url);
-        
-//        Data resultData = restTemplate.postForObject(url, dt, String.class);
-        
-        String sendMsg = j.toString();
-        @SuppressWarnings("deprecation")
-		JSONParser parser = new JSONParser();
-       // String response = restTemplate.postForObject(url, dt, String.class);
-        JSONObject jsonObj = (JSONObject)parser.parse(sendMsg);
-        teamId = (int) jsonObj.get("teamId");
-        now = (long) jsonObj.get("now");
-        result = (double) jsonObj.get("result");
-        
-        String summoner = new Summoner(teamId, now, result);
+       String response = restTemplate.postForObject(url, request, String.class);
+       Map<String, Object> parsedMap = new JacksonJsonParser().parseMap(response);
+       
+
+       Map<String, Object> summonerDetail = (Map<String, Object>) parsedMap.values().toArray()[0];
+       int teamId = (Integer)summonerDetail.get("teamId");
+       int now = (Integer)summonerDetail.get("now");
+       double result = (double)summonerDetail.get("result");
+       summonerDetail=(Map<String,Object>)parsedMap.values().toArray()[0];
+       parsedMap = new JacksonJsonParser().parseMap(request);
+       
+       
+       
+       Summoner summoner = new Summoner(teamId, now, result);
 
         return summoner;
     }
