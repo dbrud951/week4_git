@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
+
 import springfox.documentation.spring.web.json.Json;
 import univ.lecture.riotapi.Calculator;
 import univ.lecture.riotapi.model.Summoner;
@@ -39,38 +41,12 @@ public class RiotApiController {
 
     @Value("${riot.api.key}")
     private String riotApiKey;
-
-    Calculator cal = new Calculator();
-
-    
-    class Data{
-    	int teamId = 7;
-    	long now = System.currentTimeMillis();
-    	double result;
-    	
-    	public int getTeamId(){
-    		return teamId;
-    	}
-    	
-    	public long getNow(){
-    		return now;
-    	}
-    	
-    	public void setResult(String exp){
-    		this.result = cal.calculate(exp);
-    	}
-    	
-    	public double getResult(){
-    		return result;
-    	}
-    	
-    }
     
     @RequestMapping(value = "/calc/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody Summoner querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
+    public @ResponseBody String querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
         final String url = riotApiEndpoint;
-//
-//        Calculator cal = new Calculator();
+
+        Calculator cal = new Calculator();
 //
 //        Data dt = new Data();
 //        
@@ -100,29 +76,19 @@ public class RiotApiController {
 //        result = (double) jsonObj.get("result");
 //        
 //        String summoner = new Summoner(teamId, now, result);
-        Calculator cal = new Calculator();
-        
-        String request = "{"
-        + "\"teamId\":"+7
-        + "\"now\":"+System.currentTimeMillis()
-        + "\"cal\":"+cal.calculate(equation)
-        + "}";
-       
-       String response = restTemplate.postForObject(url, request, String.class);
-       Map<String, Object> parsedMap = new JacksonJsonParser().parseMap(response);
-       
 
-       Map<String, Object> summonerDetail = (Map<String, Object>) parsedMap.values().toArray()[0];
-       int teamId = (Integer)summonerDetail.get("teamId");
-       int now = (Integer)summonerDetail.get("now");
-       double result = (double)summonerDetail.get("result");
-       summonerDetail=(Map<String,Object>)parsedMap.values().toArray()[0];
-       parsedMap = new JacksonJsonParser().parseMap(request);
-       
-       
-       
+       Date dt = new Date();
+        
+       int teamId = 7;
+       long now = dt.getTime();
+       double result = cal.calculate(equation);
+        
        Summoner summoner = new Summoner(teamId, now, result);
 
-        return summoner;
+       Gson gson = new Gson();
+       
+       String request = gson.toJson(summoner);
+       String string = restTemplate.postForObject(url, request, String.class);
+        return string;
     }
 }
