@@ -1,9 +1,7 @@
 package univ.lecture.riotapi.controller;
 
 import lombok.extern.log4j.Log4j;
-import net.minidev.json.parser.JSONParser;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.JacksonJsonParser;
