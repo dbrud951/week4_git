@@ -95,8 +95,8 @@ public class RiotApiController {
 		JSONParser parser = new JSONParser();
        // String response = restTemplate.postForObject(url, dt, String.class);
         JSONObject jsonObj = (JSONObject)parser.parse(sendMsg);
-//        String data1 = jsonObj.get("teamId").toString();
-//        String data2 = jsonObj.get("now").toString();
+        teamId = (int) jsonObj.get("teamId");
+        now = (long) jsonObj.get("now");
         result = (double) jsonObj.get("result");
         
         String summoner = new Summoner(teamId, now, result);
