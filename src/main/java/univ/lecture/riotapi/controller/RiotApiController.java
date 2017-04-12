@@ -47,8 +47,10 @@ public class RiotApiController {
        
         Calculator calc=new Calculator();
         
+        Date dt = new Date();
+        
         int teamId = 7;
-        long now = System.currentTimeMillis(); 
+        long now = dt.getTime(); 
         double result = calc.calculate(equation);
         
         Model model = new Model(teamId,now,result);                
