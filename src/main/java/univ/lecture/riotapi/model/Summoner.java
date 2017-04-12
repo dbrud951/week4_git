@@ -14,7 +14,7 @@ public class Summoner {
 	/* private String name;
     private int summonerLevel;*/
 	private int teamID;
-	private long now;
+	private int now;
 	private double result;
 	
 	

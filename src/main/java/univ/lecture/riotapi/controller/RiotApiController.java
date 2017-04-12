@@ -73,8 +73,7 @@ public class RiotApiController {
        
        
        Summoner summoner = new Summoner(teamId, now, result);
-
-       return summoner;
+       
         return summoner;
     }
 }
