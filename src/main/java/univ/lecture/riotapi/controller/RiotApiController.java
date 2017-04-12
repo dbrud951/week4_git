@@ -28,7 +28,7 @@ import java.util.Map;
  * Created by tchi on 2017. 4. 1..
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/")
 @Log4j
 public class RiotApiController {
     @Autowired
@@ -40,7 +40,7 @@ public class RiotApiController {
     @Value("${riot.api.key}")
     private String riotApiKey;
     
-    @RequestMapping(value = "/calc/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = {"application/json"})
+    @RequestMapping(value = "/calc", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
    public String querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
         final String url = riotApiEndpoint;                   
