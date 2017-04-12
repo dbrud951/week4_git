@@ -41,8 +41,9 @@ public class RiotApiController {
     private String riotApiKey;
     
     @RequestMapping(value = "/calc/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public @ResponseBody String querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
     public @ResponseBody Summoner querySummoner(@RequestBody String equation) throws UnsupportedEncodingException {
-        final String url = riotApiEndpoint;
+    	final String url = riotApiEndpoint;
 
 	       Calculator cal = new Calculator();
 	       Date dt = new Date();
@@ -57,6 +58,11 @@ public class RiotApiController {
 	       
 	       String request = gson.toJson(summoner);
 	       String string = restTemplate.postForObject(url, request, String.class);
-        return summoner;
+	       teamId = gson.fromJson("teamId", Integer.class);
+	       now = gson.fromJson("nowt", Long.class);
+	       result = gson.fromJson("result", Double.class);
+	       Summoner summoner2 = new Summoner(teamId, now, result);
+        //return string;
+	       return summoner2;
     }
 }
